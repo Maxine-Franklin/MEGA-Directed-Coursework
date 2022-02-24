@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chase : MonoBehaviour
 {
-    bool Safe = true;
+    //bool Safe = true;
     float Speed = 0.1f;
 
     // Start is called before the first frame update

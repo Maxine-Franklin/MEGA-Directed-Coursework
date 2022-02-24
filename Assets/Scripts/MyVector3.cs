@@ -74,6 +74,18 @@ public class MyVector3
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Euler"></param>
+    /// <returns></returns>
+    public static MyVector3 EulerToVector(MyVector3 Euler)
+    {
+        MyVector3 rv = MyVector3.Zero;
+
+        return rv;
+    }
+
+    /// <summary>
     /// Calcuates the dot product of two MyVector3s
     /// </summary>
     /// <param name="a">A MyVector3 Parameter</param>
