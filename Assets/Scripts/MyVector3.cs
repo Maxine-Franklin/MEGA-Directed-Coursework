@@ -80,7 +80,7 @@ public class MyVector3
     /// <param name="b">A MyVector3 Parameter</param>
     /// <param name="Normalise">Normalise the MyVector3s</param>
     /// <returns>The dot product of the two MyVector3s</returns>
-    public static float VectorDotProduct(MyVector3 a, MyVector3 b, bool Normalise)
+    public static float VectorDotProduct(MyVector3 a, MyVector3 b, bool Normalise = false)
     {
         if (Normalise) //If MyVector3s should be normalised then...
         {
@@ -98,7 +98,7 @@ public class MyVector3
     public MyVector3 NormaliseVector()
     {
         MyVector3 rv = new MyVector3(x, y, z);
-        rv = MyVector3.ScaleVector(rv, rv.Length()); //Calculates the normalised MyVector3 by performing the calculation of: vector.normalised = vector / vector.length
+        rv = MyVector3.DivideVector(rv, rv.Length()); //Calculates the normalised MyVector3 by performing the calculation of: vector.normalised = vector / vector.length
         return rv; //Returns the stored result in the Return Vector to the caller
     }
 
