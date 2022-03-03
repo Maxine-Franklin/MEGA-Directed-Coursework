@@ -74,13 +74,17 @@ public class MyVector3
     }
 
     /// <summary>
-    /// 
+    /// Converts an Euler angle into a directional MyVector3
     /// </summary>
-    /// <param name="Euler"></param>
-    /// <returns></returns>
+    /// <param name="Euler">A MyVector3 parameter storing an Euler angle</param>
+    /// <returns>A directional MyVector3</returns>
     public static MyVector3 EulerToVector(MyVector3 Euler)
     {
         MyVector3 rv = MyVector3.Zero;
+
+        rv.x = Mathf.Cos(Euler.y) * Mathf.Sin(Euler.x);
+        rv.y = Mathf.Sin(Euler.x);
+        rv.z = Mathf.Cos(Euler.x) * Mathf.Cos(Euler.y);
 
         return rv;
     }
@@ -101,6 +105,12 @@ public class MyVector3
             b = b.NormaliseVector();
         }
         return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z)); //Returns the MyVector3 Dot Product
+    }
+
+    public static Vector3 ToUnityVector3(MyVector3 a)
+    {
+        Vector3 uv = new Vector3(a.x, a.y, a.z);
+        return uv;
     }
 
     /// <summary>

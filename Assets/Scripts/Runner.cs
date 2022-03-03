@@ -27,6 +27,12 @@ public class Runner : MonoBehaviour
     void Update()
     {
         MyVector3 Pos = new MyVector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        MyVector3 EulerAngle = new MyVector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+        MyVector3 ForwardDirection = MyVector3.EulerToVector(EulerAngle);
+        if (Input.GetKeyDown("w")) 
+        {
+            this.transform.position = MyVector3.ToUnityVector3(MyVector3.AddVector(Pos, ForwardDirection));
+        }
         //if (Input.GetKeyDown("w")) { this.transform.position = MyVector3.AddVector(Pos, Fowards).ToUnityVector3; }
         //if (Input.GetKeyDown("s")) { this.transform.position = MyVector3.AddVector(Pos, Backwards).ToUnityVector3; }
         //if (Input.GetKeyDown("a")) { this.transform.position = MyVector3.AddVector(Pos, Left).ToUnityVector3; }
