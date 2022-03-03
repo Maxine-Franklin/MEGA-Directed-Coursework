@@ -107,6 +107,11 @@ public class MyVector3
         return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z)); //Returns the MyVector3 Dot Product
     }
 
+    public static MyVector3 LinearInterpretation(MyVector3 a, MyVector3 b, float t)
+    {
+        return AddVector(ScaleVector(a, (1 - t)), ScaleVector(b, t));
+    }
+
     public static Vector3 ToUnityVector3(MyVector3 a)
     {
         Vector3 uv = new Vector3(a.x, a.y, a.z);
