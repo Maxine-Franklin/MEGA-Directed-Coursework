@@ -374,7 +374,7 @@ public class myMatrix4x4
         rv.w = lhs.values[3, 0] * rhs.x + lhs.values[3, 1] * rhs.y + lhs.values[3, 2] * rhs.z + lhs.values[3, 3] * rhs.w;
         return rv;
     }
-    /*public static myVector4 operator *(myMatrix4x4 lhs, myVector3 rhs)
+    public static myVector4 operator *(myMatrix4x4 lhs, myVector3 rhs)
     {
         myVector4 rv = myVector4.Zero;
         //Scales the myMatrix4x4 by the myVector3
@@ -383,8 +383,8 @@ public class myMatrix4x4
         rv.z = lhs.values[2, 0] * rhs.x + lhs.values[2, 1] * rhs.y + lhs.values[2, 2] * rhs.z + lhs.values[2, 3] * 1;
         rv.w = lhs.values[3, 0] * rhs.x + lhs.values[3, 1] * rhs.y + lhs.values[3, 2] * rhs.z + lhs.values[3, 3] * 1;
         return rv;
-    }*/
-    public static myVector3 operator *(myMatrix4x4 lhs, myVector3 rhs)
+    }
+    /*public static myVector3 operator *(myMatrix4x4 lhs, myVector3 rhs)
     {
         myVector3 rv = myVector3.Zero;
         //Scales the myMatrix4x4 by the myVector3
@@ -392,5 +392,5 @@ public class myMatrix4x4
         rv.y = lhs.values[1, 0] * rhs.x + lhs.values[1, 1] * rhs.y + lhs.values[1, 2] * rhs.z + lhs.values[1, 3] * 1;
         rv.z = lhs.values[2, 0] * rhs.x + lhs.values[2, 1] * rhs.y + lhs.values[2, 2] * rhs.z + lhs.values[2, 3] * 1;
         return rv;
-    }
+    }*/
 }

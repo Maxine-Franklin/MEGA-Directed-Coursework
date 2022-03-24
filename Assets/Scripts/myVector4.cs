@@ -82,6 +82,11 @@ public class myVector4
         return Len; //Returns the result to the caller
     }
 
+    public myVector3 ToMyVector3()
+    {
+        return new myVector3(x, y, z);
+    }
+
     public static Vector4 ToUnityVector4(myVector4 a)
     {
         Vector4 uv = new Vector4(a.x, a.y, a.z, a.w);

@@ -71,6 +71,18 @@ public class myVector3
     public static bool operator >=(myVector3 a, myVector3 b)
     { if (a.x >= b.x && a.y >= b.y && a.z >= b.z) { return true; } else { return false; } }
 
+    public static myVector3 ToMyVector3(Vector3 a)
+    {
+        return new myVector3(a.x, a.y, a.z);
+    }
+    public static myVector3[] ToMyVector3(Vector3[] a)
+    {
+        myVector3[] rv = new myVector3[a.Length];
+        for (int i = 0; i < a.Length; i++)
+        { rv[i] = ToMyVector3(a[i]); }
+        return rv;
+    }
+
     public static Vector3 ToUnityVector3(myVector3 a)
     {
         Vector3 uv = new Vector3(a.x, a.y, a.z);
