@@ -31,10 +31,10 @@ public class Chase : MonoBehaviour
     void Move()
     {
         Vector3 Obj2 = GameObject.Find("Obj2").transform.position;
-        MyVector3 Obj2Vector = new MyVector3(Obj2.x, Obj2.y, Obj2.z);
-        MyVector3 Obj1Vector = new MyVector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        MyVector3 Movement = MyVector3.SubVector(Obj2Vector, Obj1Vector);
-        Obj1Vector = MyVector3.AddVector(Obj1Vector, MyVector3.ScaleVector(Movement.NormaliseVector(), Speed));
+        myVector3 Obj2Vector = new myVector3(Obj2.x, Obj2.y, Obj2.z);
+        myVector3 Obj1Vector = new myVector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        myVector3 Movement = myMaths.SubVector(Obj2Vector, Obj1Vector);
+        Obj1Vector = myMaths.AddVector(Obj1Vector, myMaths.ScaleVector(Movement.NormaliseVector(), Speed));
         this.transform.position = Obj1Vector.ToUnityVector3();
         return;
     }
