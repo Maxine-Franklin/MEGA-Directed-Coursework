@@ -89,6 +89,14 @@ public class myVector3
         return uv;
     }
 
+    public static Vector3[] ToUnityVector3(myVector3[] a)
+    {
+        Vector3[] rv = new Vector3[a.Length];
+        for (int i = 0; i < a.Length; i++)
+        { rv[i] = ToUnityVector3(a[i]); }
+        return rv;
+    }
+
     /// <summary>
     /// Normalises the myVector3
     /// </summary>

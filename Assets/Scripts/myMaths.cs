@@ -342,7 +342,7 @@ public class myMatrix4x4
     }
     public myMatrix4x4(myVector3 column1, myVector3 column2, myVector3 column3, myVector3 column4)
     {
-        values = new float[3, 4];
+        values = new float[4, 4];
         //Column1
         values[0, 0] = column1.x;
         values[1, 0] = column1.y;
