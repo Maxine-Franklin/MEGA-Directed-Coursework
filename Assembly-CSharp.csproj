@@ -56,18 +56,18 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Teleport.cs" />
-    <Compile Include="Assets\Scripts\scaleObject.cs" />
-    <Compile Include="Assets\Scripts\Chase.cs" />
-    <Compile Include="Assets\Scripts\MyVector2.cs" />
-    <Compile Include="Assets\Scripts\transformObject.cs" />
-    <Compile Include="Assets\Scripts\LinearMove.cs" />
-    <Compile Include="Assets\Scripts\Interpolator.cs" />
-    <Compile Include="Assets\Scripts\rotateObject.cs" />
-    <Compile Include="Assets\Scripts\myVector3.cs" />
-    <Compile Include="Assets\Scripts\myMaths.cs" />
-    <Compile Include="Assets\Scripts\Runner.cs" />
-    <Compile Include="Assets\Scripts\myVector4.cs" />
+    <Compile Include="Assets\Scripts\Actors\Teleport.cs" />
+    <Compile Include="Assets\Scripts\Actors\scaleObject.cs" />
+    <Compile Include="Assets\Scripts\Actors\Chase.cs" />
+    <Compile Include="Assets\Scripts\Vectors\MyVector2.cs" />
+    <Compile Include="Assets\Scripts\Actors\transformObject.cs" />
+    <Compile Include="Assets\Scripts\Actors\LinearMove.cs" />
+    <Compile Include="Assets\Scripts\Actors\Interpolator.cs" />
+    <Compile Include="Assets\Scripts\Actors\rotateObject.cs" />
+    <Compile Include="Assets\Scripts\Vectors\MyVector3.cs" />
+    <Compile Include="Assets\Scripts\Vectors\myMaths.cs" />
+    <Compile Include="Assets\Scripts\Actors\Runner.cs" />
+    <Compile Include="Assets\Scripts\Vectors\myVector4.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
