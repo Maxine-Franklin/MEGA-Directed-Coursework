@@ -319,10 +319,12 @@
 "Assets/Scripts/Actors/scaleObject.cs"
 "Assets/Scripts/Actors/Teleport.cs"
 "Assets/Scripts/Actors/transformObject.cs"
-"Assets/Scripts/Vectors/myMaths.cs"
-"Assets/Scripts/Vectors/MyVector2.cs"
-"Assets/Scripts/Vectors/MyVector3.cs"
-"Assets/Scripts/Vectors/myVector4.cs"
+"Assets/Scripts/Actors/translateObject.cs"
+"Assets/Scripts/Mathematics/myMaths.cs"
+"Assets/Scripts/Mathematics/myTransform.cs"
+"Assets/Scripts/Mathematics/MyVector2.cs"
+"Assets/Scripts/Mathematics/MyVector3.cs"
+"Assets/Scripts/Mathematics/myVector4.cs"
 -langversion:8.0
 
 /deterministic
