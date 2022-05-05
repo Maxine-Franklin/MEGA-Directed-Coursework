@@ -321,6 +321,7 @@
 "Assets/Scripts/Actors/transformObject.cs"
 "Assets/Scripts/Actors/translateObject.cs"
 "Assets/Scripts/Mathematics/myMaths.cs"
+"Assets/Scripts/Mathematics/myRigidBody.cs"
 "Assets/Scripts/Mathematics/myTransform.cs"
 "Assets/Scripts/Mathematics/MyVector2.cs"
 "Assets/Scripts/Mathematics/MyVector3.cs"

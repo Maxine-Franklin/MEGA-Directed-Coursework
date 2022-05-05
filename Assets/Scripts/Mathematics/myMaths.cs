@@ -377,6 +377,37 @@ public class myMatrix4x4
     }
 
     /// <summary>
+    /// Compares every value stored in both myMatrix4x4s to determine if they hold the same values
+    /// </summary>
+    /// <param name="a">A myMatrix4x4 parameter</param>
+    /// <param name="b">A myMatrix4x4 parameter</param>
+    /// <returns>True if all values are equal<br/>False if any two values are not equal</returns>
+    public static bool operator ==(myMatrix4x4 a, myMatrix4x4 b)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                if (a.values[i, k] != b.values[i, k])
+                { return false; }
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Compares every value stored in both myMatrix4x4s to determine if they hold different values
+    /// </summary>
+    /// <param name="a">A myMatrix4x4 parameter</param>
+    /// <param name="b">A myMatrix4x4 parameter</param>
+    /// <returns>False if all values are equal<br/>True if any two values are not equal</returns>
+    public static bool operator !=(myMatrix4x4 a, myMatrix4x4 b)
+    {
+        if (a == b) { return false; }
+        else { return true; }
+    }
+
+    /// <summary>
     /// Multiplies two myMatrix4x4s together
     /// </summary>
     /// <param name="a">A myMatrix4x4 parameter</param>

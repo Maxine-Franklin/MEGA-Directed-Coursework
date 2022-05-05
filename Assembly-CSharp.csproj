@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Actors\Chase.cs" />
     <Compile Include="Assets\Scripts\Mathematics\MyVector2.cs" />
     <Compile Include="Assets\Scripts\Actors\translateObject.cs" />
+    <Compile Include="Assets\Scripts\Mathematics\myRigidBody.cs" />
     <Compile Include="Assets\Scripts\Actors\LinearMove.cs" />
     <Compile Include="Assets\Scripts\Actors\Interpolator.cs" />
     <Compile Include="Assets\Scripts\Actors\rotateObject.cs" />

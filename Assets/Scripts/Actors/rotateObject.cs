@@ -46,7 +46,9 @@ public class rotateObject : MonoBehaviour
             new myVector3(Mathf.Sin(Angle), 0, Mathf.Cos(Angle)),
             myVector3.Zero);
 
-        myMatrix4x4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix); //Calculates the entire rotation in one step
+        //myMatrix4x4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix); //Calculates the entire rotation in one step
+        myMatrix4x4 rotationMatrix = yawMatrix * (myMatrix4x4.Identity * myMatrix4x4.Identity); //Calculates the entire rotation in one step
+        rotationMatrix.values[3, 2] = 1;
 
         //Transform each individual vertex
         for (int i = 0; i < TransformedVertices.Length; i++)

@@ -19,12 +19,12 @@ public class scaleObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Scaler += Time.deltaTime;
+        Scaler += Time.deltaTime; //Tracks total time since function started
 
         //Define a new array with the correct size
         myVector3[] TransformedVertices = new myVector3[ModelSpaceVertices.Length];
 
-        //Create our scaling matrix (2x, y, z)
+        //Create our scaling matrix (sine wave, cosine wave, cosine wave)
         myMatrix4x4 scaleMatrix = new myMatrix4x4(new myVector3(1, 0, 0) * (1 + Mathf.Sin(Scaler)), new myVector3(0, 1, 0) * (1 + Mathf.Cos(Scaler)), new myVector3(0, 0, 1) * (1 + Mathf.Cos(Scaler) * Mathf.Sin(Scaler)), myVector3.Zero);
 
         //Transform each individual vertex

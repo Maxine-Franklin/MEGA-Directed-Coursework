@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class myVector4
 {
-    public float x, y, z, w;
+    public float x, y, z, w; //The myVector4 values
 
-    public static myVector4 Zero = new myVector4(0, 0, 0, 0);
+    //public static myVector4 Zero = new myVector4(0, 0, 0, 0); //Creates an empty myVector4 parameter
 
-    public myVector4(float x, float y, float z, float w)
+    public static myVector4 Zero //Replacement for myVector4.Zero
+    { get { return new myVector4(0, 0, 0, 0); } }
+
+    public myVector4(float x, float y, float z, float w) //The myVector4 constructor
     {
         this.x = x;
         this.y = y;
