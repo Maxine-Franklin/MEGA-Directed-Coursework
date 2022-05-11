@@ -12,6 +12,8 @@ public class myTransform : MonoBehaviour
 
     public float[] Change = new float[] { 0, -1, -1, -1, -1 };
 
+    public int changeLog = 0;
+
     private Mesh MF; //Mesh filter
     myVector3[] ModelSpaceVertices;
     //public float tester = 12.4f;
@@ -48,8 +50,10 @@ public class myTransform : MonoBehaviour
         //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
         //if (MF == null)
         //{ Mesh mesh = GetComponent<MeshFilter>().sharedMesh; Mesh MFI = Instantiate(mesh); GetComponent<MeshFilter>().sharedMesh = MFI; }
-        if (!(Position[0] == Position[1] && Rotation[0] == Rotation[1] && Scale[0] == Scale[1])) //Checks if the transform of the gameObject has changed since the last update
+        //if (!(Position[0] == Position[1] && Rotation[0] == Rotation[1] && Scale[0] == Scale[1])) //Checks if the transform of the gameObject has changed since the last update
+        if (Position[0] != Position[1] || Rotation[0] != Rotation[1] || Scale[0] != Scale[1])
         {
+            changeLog++;
         /*if (Change[0] == 1)
         {
             switch (Change[1])
@@ -61,7 +65,7 @@ public class myTransform : MonoBehaviour
 
                 case 2.0f:
             }*/
-            Debug.Log("CHANGE");
+            Debug.Log("CHANGE: " + changeLog);
             //Calculates the difference between the previous transform and the new transform and manipulates the gameObject by this difference
             Position[2] = Position[0]; //- Position[1];
             Rotation[2] = Rotation[0]; //- Rotation[1];
@@ -168,7 +172,9 @@ public class myTransformEditor : Editor
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Position", GUILayout.MinWidth(67.0f / 194.0f * Screen.width)); //Informs user that they are editing the position of the object
         EditorGUILayout.LabelField("X", GUILayout.Width(9.0f)); //Informs the user that they are editing the x coordinate of the object's position
+        EditorGUI.BeginChangeCheck();
         myTrans.Position[0].values[0, 3] = EditorGUILayout.FloatField(myTrans.Position[0].values[0, 3], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's x position
+        if (EditorGUI.EndChangeCheck()) { Debug.Log("P X Change"); }
         EditorGUILayout.LabelField("Y", GUILayout.Width(9.0f)); //Informs the user that they are editing the y coordinate of the object's position
         myTrans.Position[0].values[1, 3] = EditorGUILayout.FloatField(myTrans.Position[0].values[1, 3], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's y position
         EditorGUILayout.LabelField("Z", GUILayout.Width(9.0f)); //Informs the user that they are editing the z coordinate of the object's position
