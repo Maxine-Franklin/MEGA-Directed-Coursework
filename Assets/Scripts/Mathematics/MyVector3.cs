@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class myVector3
@@ -45,6 +47,15 @@ public class myVector3
         myVector3 rv = new myVector3(startVector3.x * Scalar, startVector3.y * Scalar, startVector3.z * Scalar); //Scales the myVector3 and stores the result in the Return Vector
         return rv; //Returns the stored result in the Return Vector to the caller
     }
+
+    /// <summary>
+    /// Divides the inputted myVector3 by the inputted scalar
+    /// </summary>
+    /// <param name="a">A myVector3 Parameter</param>
+    /// <param name="Scalar">Value used to scale the myVector3 Parameter</param>
+    /// <returns>The divided myVector3</returns>
+    public static myVector3 operator /(myVector3 a, float Scalar)
+    { return new myVector3(a.x / Scalar, a.y / Scalar, a.z / Scalar); }//Divides the myVector3 by the scalar and returns to resultant myVector3 to the caller
 
     /// <summary>
     /// Less Than
@@ -148,3 +159,43 @@ public class myVector3
         return uv;
     }
 }
+
+/*
+/// <summary>
+/// Creates the custom editor elements for myTransform_OLD
+/// WARNING: Custom Editor is the 'old' method for modifying the script variables directly
+/// It cannot handle multi-object editing, undo, and Prefab overrides
+/// </summary>
+[CustomEditor(typeof(myVector3))]
+[CanEditMultipleObjects]
+public class myVector3Editor : Editor
+{
+    SerializedProperty myVec;
+    SerializedProperty x;
+    SerializedProperty y;
+    SerializedProperty z;
+    void OnEnable()
+    {
+        //Setup the SerializedProperties
+        //myVec = serializedObject.FindProperty("myVector3");
+        x = serializedObject.FindProperty("x");
+        y = serializedObject.FindProperty("y");
+        z = serializedObject.FindProperty("z");
+    }
+    public override void OnInspectorGUI()
+    {
+        //Update the serializedProperty - always do this in the beginning of OnInspectorGUI
+        serializedObject.Update();
+        EditorGUILayout.BeginHorizontal();
+        //EditorGUILayout.FloatField(myVec.FindPropertyRelative("x").floatValue);
+        EditorGUILayout.FloatField(x.floatValue);
+        EditorGUILayout.FloatField(y.floatValue);
+        EditorGUILayout.FloatField(z.floatValue);
+        EditorGUILayout.EndHorizontal();
+
+        // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
+        serializedObject.ApplyModifiedProperties();
+
+        base.OnInspectorGUI();
+    }
+}*/

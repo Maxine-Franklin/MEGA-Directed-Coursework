@@ -1,214 +1,150 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class myTransform : MonoBehaviour
 {
-    public myMatrix4x4[] Position =  new myMatrix4x4[] { myMatrix4x4.Identity, myMatrix4x4.Identity, myMatrix4x4.Identity };
-    public myVector3[] Rotation = new myVector3[] { myVector3.Zero, myVector3.Zero, myVector3.Zero };
-    public myMatrix4x4[] Scale = new myMatrix4x4[] { myMatrix4x4.Identity, myMatrix4x4.Identity, myMatrix4x4.Identity };
+    public myVector3 Position = myVector3.Zero; //myMatrix4x4.Identity;
+    //public Position position = new Position(myVector3.Zero);
+    public myVector3 Rotation = myVector3.Zero;
+    public myVector3 Scale = new myVector3(1f, 1f, 1f);
 
-    public float[] Change = new float[] { 0, -1, -1, -1, -1 };
-
-    public int changeLog = 0;
-
-    private Mesh MF; //Mesh filter
     myVector3[] ModelSpaceVertices;
-    //public float tester = 12.4f;
+
     // Start is called before the first frame update
-    /*void Awake()
+    void Start()
     {
         //Mesh filter is a component that stores information about the current mesh
-        Mesh MF = GetComponent<MeshFilter>().sharedMesh;
+        MeshFilter MF = GetComponent<MeshFilter>();
 
         //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
-        ModelSpaceVertices = myVector3.ToMyVector3(MF.vertices);
+        ModelSpaceVertices = myVector3.ToMyVector3(MF.mesh.vertices);
 
-        //Position = myVector3.ToMyVector3(gameObject.transform.position);
-    }*/
-
-    private void Start()
-    {
-        //MF = new Mesh();
-        //MF = Instantiate(GetComponent<MeshFilter>().sharedMesh);
-
-        //ModelSpaceVertices = myVector3.ToMyVector3(MF.vertices);
-
-        if (MF == null)
-        { Mesh mesh = GetComponent<MeshFilter>().sharedMesh; Mesh MFI = Instantiate(mesh); GetComponent<MeshFilter>().sharedMesh = MFI; }
-
-        foreach (myMatrix4x4 m in Scale)
-        { m.values[3, 3] = 0; }
+        Position = myVector3.ToMyVector3(gameObject.transform.position);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //Mesh filter is a component that stores information about the current mesh
-        //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
-        //if (MF == null)
-        //{ Mesh mesh = GetComponent<MeshFilter>().sharedMesh; Mesh MFI = Instantiate(mesh); GetComponent<MeshFilter>().sharedMesh = MFI; }
-        //if (!(Position[0] == Position[1] && Rotation[0] == Rotation[1] && Scale[0] == Scale[1])) //Checks if the transform of the gameObject has changed since the last update
-        if (Position[0] != Position[1] || Rotation[0] != Rotation[1] || Scale[0] != Scale[1])
+        if (ModelSpaceVertices != null)
         {
-            changeLog++;
-        /*if (Change[0] == 1)
-        {
-            switch (Change[1])
-            {
-                case 0.0f:
-
-                    break;
-                case 1.0f:
-
-                case 2.0f:
-            }*/
-            Debug.Log("CHANGE: " + changeLog);
-            //Calculates the difference between the previous transform and the new transform and manipulates the gameObject by this difference
-            Position[2] = Position[0]; //- Position[1];
-            Rotation[2] = Rotation[0]; //- Rotation[1];
-            Scale[2] = Scale[0];// - Scale[1];
-
-            //Mesh filter is a component that stores information about the current mesh
-            Mesh MF = GetComponent<MeshFilter>().sharedMesh;
-
-            //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
-            ModelSpaceVertices = myVector3.ToMyVector3(MF.vertices);
-
             //Define a new array with the correct size
             myVector3[] transformedVertices = new myVector3[ModelSpaceVertices.Length];
 
-            //Create our rotation matrix (Rotation.z, Rotation.y, Rotation.x)
+            //Create our scaling matrix
+            myMatrix4x4 scaleMatrix = new myMatrix4x4(new myVector3(1, 0, 0) * Scale.x, new myVector3(0, 1, 0) * Scale.y, new myVector3(0, 0, 1) * Scale.z, myVector3.Zero);
+
+            //Create our rotation matrix (0, 0, 45)
             //Roll
             myMatrix4x4 rollMatrix = new myMatrix4x4(
-                new myVector3(Mathf.Cos(Rotation[2].z), Mathf.Sin(Rotation[2].z), 0),
-                new myVector3(-Mathf.Sin(Rotation[2].z), Mathf.Cos(Rotation[2].z), 0),
+                new myVector3(Mathf.Cos(Rotation.x), Mathf.Sin(Rotation.x), 0),
+                new myVector3(-Mathf.Sin(Rotation.x), Mathf.Cos(Rotation.x), 0),
                 new myVector3(0, 0, 1),
                 myVector3.Zero);
             //Pitch
             myMatrix4x4 pitchMatrix = new myMatrix4x4(
                 new myVector3(1, 0, 0),
-                new myVector3(0, Mathf.Cos(Rotation[2].y), Mathf.Sin(Rotation[2].y)),
-                new myVector3(0, -Mathf.Sin(Rotation[2].y), Mathf.Cos(Rotation[2].y)),
+                new myVector3(0, Mathf.Cos(Rotation.y), Mathf.Sin(Rotation.y)),
+                new myVector3(0, -Mathf.Sin(Rotation.y), Mathf.Cos(Rotation.y)),
                 myVector3.Zero);
             //Yaw
             myMatrix4x4 yawMatrix = new myMatrix4x4(
-                new myVector3(Mathf.Cos(Rotation[2].x), 0, -Mathf.Sin(Rotation[2].x)),
+                new myVector3(Mathf.Cos(Rotation.z), 0, -Mathf.Sin(Rotation.z)),
                 new myVector3(0, 1, 0),
-                new myVector3(Mathf.Sin(Rotation[2].x), 0, Mathf.Cos(Rotation[2].x)),
+                new myVector3(Mathf.Sin(Rotation.z), 0, Mathf.Cos(Rotation.z)),
                 myVector3.Zero);
 
             myMatrix4x4 rotationMatrix = yawMatrix * (pitchMatrix * rollMatrix); //Calculates the entire rotation in one step
 
-            myMatrix4x4 transformMatrix = Position[2] * (rotationMatrix * Scale[0]);
+            //Create our translation matrix
+            myMatrix4x4 translationMatrix = new myMatrix4x4(
+                new myVector3(1, 0, 0),
+                new myVector3(0, 1, 0),
+                new myVector3(0, 0, 1),
+                new myVector3(Position.x, Position.y, Position.z));
+
+            myMatrix4x4 transformMatrix = translationMatrix * (rotationMatrix * scaleMatrix);
 
             //Transform each individual vertex
             for (int i = 0; i < transformedVertices.Length; i++)
             { transformedVertices[i] = (transformMatrix * ModelSpaceVertices[i]).ToMyVector3(); }
 
             //Mesh filter is a component that stores information about the current mesh
-            /*MeshFilter*/
-            //MeshFilter meshF = GetComponent<MeshFilter>();
-
-            //Mesh MFUpdate = MF;
-            MF = GetComponent<MeshFilter>().sharedMesh;
+            MeshFilter MF = GetComponent<MeshFilter>();
 
             //Assign our new vertices
-            //meshF.mesh.vertices = myVector3.ToUnityVector3(transformedVertices);
-            MF.vertices = myVector3.ToUnityVector3(transformedVertices);
+            MF.mesh.vertices = myVector3.ToUnityVector3(transformedVertices);
 
             //These final steps are sometimes necessary to make the mesh look correct
-            //meshF.mesh.RecalculateNormals();
-            //meshF.mesh.RecalculateBounds();
+            MF.mesh.RecalculateNormals();
+            MF.mesh.RecalculateBounds();
 
-            MF.RecalculateNormals();
-            MF.RecalculateBounds();
-
-            //Updates stored previous transform of the gameObject
-            Position[1] = Position[0];
-            Rotation[1] = Rotation[0];
-            Scale[1] = Scale[0];
+            if (gameObject.GetComponentInChildren<Camera>() != null)
+            {
+                gameObject.GetComponentInChildren<Camera>().transform.localPosition = Position.ToUnityVector3();
+                //gameObject.GetComponentInChildren<Camera>().transform.rotation = Rotation.ToUnityVector3();
+            }
         }
     }
-}
 
-/// <summary>
-/// Creates the custom editor elements for myTransform
-/// WARNING: Custom Editor is the 'old' method for modifying the script variables directly
-/// It cannot handle multi-object editing, undo, and Prefab overrides
-/// </summary>
-[CustomEditor(typeof(myTransform))]
-[CanEditMultipleObjects]
-public class myTransformEditor : Editor
-{
-    /*SerializedProperty positionProp;
-    SerializedProperty rotationProp;
-    SerializedProperty scaleProp;
-    SerializedProperty testerProp;*/
-
-   /* private void OnEnable()
+    /*private myVector3[] getMesh()
     {
-        //Setup the SerializedProperties
-        positionProp = serializedObject.FindProperty("Position");
-        rotationProp = serializedObject.FindProperty("Rotation");
-        scaleProp = serializedObject.FindProperty("Scale");
-        testerProp = serializedObject.FindProperty("tester");
-    }*/
-    public override void OnInspectorGUI()
-    {
-        //Update the serializedProperty - always do this in the beginning of OnInspectorGUI
-        //serializedObject.Update();
-        /*EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.FloatField(positionProp.FindPropertyRelative("x").floatValue);
-        EditorGUILayout.FloatField(positionProp.FindPropertyRelative("y").floatValue);
-        EditorGUILayout.FloatField(positionProp.FindPropertyRelative("z").floatValue);
-        EditorGUILayout.EndHorizontal();*/
+        //Mesh filter is a component that stores information about the current mesh
+        MeshFilter MF = GetComponent<MeshFilter>();
+        position = new Position(myVector3.ToMyVector3(gameObject.transform.position));
 
-        myTransform myTrans = (myTransform)target;
-
-        //Position
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Position", GUILayout.MinWidth(67.0f / 194.0f * Screen.width)); //Informs user that they are editing the position of the object
-        EditorGUILayout.LabelField("X", GUILayout.Width(9.0f)); //Informs the user that they are editing the x coordinate of the object's position
-        EditorGUI.BeginChangeCheck();
-        myTrans.Position[0].values[0, 3] = EditorGUILayout.FloatField(myTrans.Position[0].values[0, 3], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's x position
-        if (EditorGUI.EndChangeCheck()) { Debug.Log("P X Change"); }
-        EditorGUILayout.LabelField("Y", GUILayout.Width(9.0f)); //Informs the user that they are editing the y coordinate of the object's position
-        myTrans.Position[0].values[1, 3] = EditorGUILayout.FloatField(myTrans.Position[0].values[1, 3], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's y position
-        EditorGUILayout.LabelField("Z", GUILayout.Width(9.0f)); //Informs the user that they are editing the z coordinate of the object's position
-        myTrans.Position[0].values[2, 3] = EditorGUILayout.FloatField(myTrans.Position[0].values[2, 3], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's z position
-        EditorGUILayout.EndHorizontal();
-        //Rotation
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Rotation", GUILayout.MinWidth(67.0f / 194.0f * Screen.width)); //Informs user that they are editing the rotation of the object
-        EditorGUILayout.LabelField("X", GUILayout.Width(9.0f)); //Informs the user that they are editing the x coordinate of the object's rotation
-        EditorGUI.BeginChangeCheck();
-        myTrans.Rotation[0].x = EditorGUILayout.FloatField(myTrans.Rotation[0].x, GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's x rotation
-        if (EditorGUI.EndChangeCheck()) { Debug.Log("R X Change"); }
-        EditorGUILayout.LabelField("Y", GUILayout.Width(9.0f)); //Informs the user that they are editing the y coordinate of the object's rotation
-        EditorGUI.BeginChangeCheck();
-        myTrans.Rotation[0].y = EditorGUILayout.FloatField(myTrans.Rotation[0].y, GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's y rotation
-        if (EditorGUI.EndChangeCheck()) { Debug.Log("R Y Change"); }
-        EditorGUILayout.LabelField("Z", GUILayout.Width(9.0f)); //Informs the user that they are editing the z coordinate of the object's rotation
-        myTrans.Rotation[0].z = EditorGUILayout.FloatField(myTrans.Rotation[0].z, GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's z rotation
-        EditorGUILayout.EndHorizontal();
-        //Scale
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Scale", GUILayout.MinWidth(67.0f / 194.0f * Screen.width)); //Informs user that they are editing the scale of the object
-        EditorGUILayout.LabelField("X", GUILayout.Width(9.0f)); //Informs the user that they are editing the x coordinate of the object's scale
-        myTrans.Scale[0].values[0, 0] = EditorGUILayout.FloatField(myTrans.Scale[0].values[0, 0], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's x scale
-        EditorGUILayout.LabelField("Y", GUILayout.Width(9.0f)); //Informs the user that they are editing the y coordinate of the object's scale
-        myTrans.Scale[0].values[1, 1] = EditorGUILayout.FloatField(myTrans.Scale[0].values[1, 1], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's y scale
-        EditorGUILayout.LabelField("Z", GUILayout.Width(9.0f)); //Informs the user that they are editing the z coordinate of the object's scale
-        myTrans.Scale[0].values[2, 2] = EditorGUILayout.FloatField(myTrans.Scale[0].values[2, 2], GUILayout.MinWidth(31.0f / 194.0f * Screen.width)); //Takes user input to update object's z scale
-        EditorGUILayout.EndHorizontal();
-
-        //if (GUI.changed) { myTrans.Change[0] = 1; Debug.Log("changexd"); }
-        // Apply changes to the serializedProperty - always do this in the end of OnInspectorGUI.
-        //serializedObject.ApplyModifiedProperties();
-
-        //base.OnInspectorGUI();
+        //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
+        return myVector3.ToMyVector3(MF.mesh.vertices);
     }
+
+    public void gMesh()
+    {
+        MeshFilter MF = GetComponent<MeshFilter>();
+        ModelSpaceVertices = myVector3.ToMyVector3(MF.mesh.vertices);
+        return;
+    }*/
+
+    /*struct Pos
+    {
+        private myVector3 _pos;
+        public Pos(myVector3 a)
+        { _pos = a; }
+        public static Pos operator +(Pos a, myVector3 b)
+        { 
+
+            return a;
+        }
+    }*/
+
+    /*
+    internal class Pos : MonoBehaviour
+    {
+        private myVector3 _position = myVector3.Zero;
+        GameObject b;
+        public Pos(GameObject a)
+        {
+            b = a;
+        }
+        private void Jerry()
+        {
+            GameObject g = gameObject;
+        }
+        public static Pos operator +(Pos a, myVector3 b)
+        {
+            //myVector3 _position = myVector3.ToMyVector3();
+
+            return a;
+        }
+    }*/
 }
+
+/*public class Position
+{
+    private myVector3 _position; //= new myVector3(0, 0, 0);
+    public Position(myVector3 a) { _position = a; } //The Position constructor
+
+    /*public static Position operator +(Position a, myVector3 b)
+    {
+        return 
+    }/
+}*/
