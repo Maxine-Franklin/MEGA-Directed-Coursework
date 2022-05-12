@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Physics\collisionController.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myTransform.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myVector4.cs" />
+    <Compile Include="Assets\Scripts\Physics\myCollisions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

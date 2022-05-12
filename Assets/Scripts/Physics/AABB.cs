@@ -77,6 +77,19 @@ public class AABB : MonoBehaviour
             || collider.Front < _self.Back);
     }
 
+    public static myVector3 IntersectsAdjustment(AABB _self, AABB collider)
+    {
+        myVector3 Adjuster = myVector3.Zero;
+        if (!(collider.Left > _self.Right)) { Adjuster.x += collider.Left - _self.Right; }
+        if (!(collider.Right < _self.Left)) { Adjuster.x += collider.Right - _self.Left; }
+        if (!(collider.Bottom > _self.Top)) { Adjuster.y += 1.25f*(_self.Top - collider.Bottom); } //Multiplier used here due to sinking that can be caused by gravity
+        else if (!(collider.Top < _self.Bottom)) { Adjuster.y += _self.Bottom - collider.Top; }
+        if (!(collider.Back > _self.Front)) { Adjuster.z += collider.Back - _self.Front; }
+        if (!(collider.Front < _self.Back)) { Adjuster.z += collider.Front - _self.Back; }
+        Debug.Log("Floor Top: " + _self.Top + "\nPlayer Bottom: " + collider.Bottom + "\nAdjustment: " + Adjuster.y);
+        return Adjuster;                  
+    }
+
     public void Position(myVector3 change) //Used when a dynamic object is moved, applies the change in move to the AABB so that the bounds don't need to be recalculated
     { minExtent += change; maxExtent += change; }
 
@@ -95,16 +108,30 @@ public class AABB : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (recalculateBounds) { calculateBounds(); recalculateBounds = false; } //If the bounds of the AABB need to be recalculated, recalculates the bounds and unflags the need to recalculate
-        foreach (AABB collider in colliders)
+        foreach (AABB collider in colliders) //For each dynamic ABBA collider in the collider list...
         {
             //Debug.Log(collider.gameObject.name + gameObject.name);
             //Debug.Log(self.Top + ", " + self.Bottom);
-            if (Intersects(self, collider))
+            if (Intersects(self, collider)) //If the collider intersects the gameObject then...
             {
-                Debug.Log("collision");
+                myVector3 change = IntersectsAdjustment(self, collider); //Calculates how far the collider has entered
+                //Debug.Log("collision: " + change.x + ", " + change.y + ", " + change.z);
+                collider.GetComponent<myTransform>().Position += change; //Adjusts the colliders position to make it exit the ABBA of the gameObject
+                collider.Position(change); //Updates the collider's ABBA to it's new position
+                myRigidBody colRigidBody = collider.gameObject.GetComponent<myRigidBody>(); //Obtains the collider's rigid body component
+                if (colRigidBody != null) //If the collider does have a rigid body then...
+                {
+                    myVector3 colVelocity = myVector3.Zero; //Creates an empty myVector3 velocity that will impart an equal but opposite force on the collider
+                    //Determines which faces of the collider collided with the gameObject and stores the reactionary velocity to those impact points
+                    if (change.x != 0) { colVelocity.x = colRigidBody.Velocity.x * Mathf.Sign(change.x); } //x-axis (Right/Left)
+                    if (change.y != 0) { colVelocity.y = colRigidBody.Velocity.y * Mathf.Sign(change.y); } //y-axis (Top/Bottom)
+                    if (change.z != 0) { colVelocity.z = colRigidBody.Velocity.z * Mathf.Sign(change.z); } //z-axis (Front/Back)
+                    //Debug.Log("Force: " + colVelocity.x + ", " + colVelocity.y + ", " + colVelocity.z);
+                    colRigidBody.Velocity -= colVelocity; //Imparts the reactionary velocity onto the collider
+                }
             }
         }
     }
