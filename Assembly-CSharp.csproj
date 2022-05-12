@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Physics\AABB.cs" />
     <Compile Include="Assets\Scripts\Actors\transformObject.cs" />
     <Compile Include="Assets\Scripts\Actors\Teleport.cs" />
     <Compile Include="Assets\Scripts\Actors\scaleObject.cs" />
@@ -63,15 +64,17 @@
     <Compile Include="Assets\Scripts\Mathematics\MyVector2.cs" />
     <Compile Include="Assets\Scripts\Actors\translateObject.cs" />
     <Compile Include="Assets\Scripts\Actors\LinearMove.cs" />
+    <Compile Include="Assets\Scripts\Physics\myRigidBody.cs" />
     <Compile Include="Assets\Scripts\Actors\Interpolator.cs" />
     <Compile Include="Assets\Scripts\Actors\rotateObject.cs" />
     <Compile Include="Assets\Scripts\Mathematics\MyVector3.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myMaths.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myTransform_OLD.cs" />
     <Compile Include="Assets\Scripts\Actors\Runner.cs" />
-    <Compile Include="Assets\Scripts\Mathematics\myVector4.cs" />
-    <Compile Include="Assets\Scripts\Physics\myRigidBody.cs" />
+    <Compile Include="Assets\Scripts\myPlayerController.cs" />
+    <Compile Include="Assets\Scripts\Physics\collisionController.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myTransform.cs" />
+    <Compile Include="Assets\Scripts\Mathematics\myVector4.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

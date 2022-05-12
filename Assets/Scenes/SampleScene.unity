@@ -707,7 +707,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Player View
   m_TagString: MainCamera
@@ -780,18 +779,6 @@ Transform:
   m_Father: {fileID: 1314439286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1f67998c597c4c419ab42024d395011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1314439282
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +793,7 @@ GameObject:
   - component: {fileID: 1314439283}
   - component: {fileID: 1314439288}
   - component: {fileID: 1314439287}
+  - component: {fileID: 1314439289}
   m_Layer: 0
   m_Name: Player Body
   m_TagString: Untagged
@@ -822,7 +810,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1314439282}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -905,6 +893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mass: 1
+  enableGravity: 1
+  Gravity: -9.8
 --- !u!114 &1314439288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,6 +907,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f67998c597c4c419ab42024d395011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1314439289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314439282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffebb8737989bb488ffc9eb570c2e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recalculateBounds: 0
+  isStatic: 0
+  collisionList: {fileID: 1563687689}
 --- !u!1 &1484096903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1030,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 802186413}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1563687688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563687690}
+  - component: {fileID: 1563687689}
+  m_Layer: 0
+  m_Name: collisionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1563687689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563687688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71649e14eeb87ef46acd929fc597e06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1563687690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563687688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.4079075, y: -4.5888586, z: 0.4532169}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1646981497
 GameObject:
@@ -1147,8 +1195,9 @@ GameObject:
   - component: {fileID: 1688071380}
   - component: {fileID: 1688071379}
   - component: {fileID: 1688071378}
+  - component: {fileID: 1688071382}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1231,6 +1280,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1688071382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688071377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffebb8737989bb488ffc9eb570c2e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recalculateBounds: 0
+  isStatic: 1
+  collisionList: {fileID: 1563687689}
 --- !u!1 &1720495692
 GameObject:
   m_ObjectHideFlags: 0

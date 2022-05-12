@@ -29,7 +29,7 @@ public class transformObject : MonoBehaviour
         //Create our scaling matrix (0.5x, 0.5y, 0.5z)
         myMatrix4x4 scaleMatrix = new myMatrix4x4(new myVector3(1, 0, 0) * 1.0f, new myVector3(0, 1, 0), new myVector3(0, 0, 1), myVector3.Zero);
 
-        /*/*Debug.Log("Scale Matrix:\n" +
+        /*Debug.Log("Scale Matrix:\n" +
             scaleMatrix.values[0, 0] + ", " + scaleMatrix.values[1, 0] + ", " + scaleMatrix.values[2, 0] + ", " + scaleMatrix.values[3, 0] + "\n" +
             scaleMatrix.values[0, 1] + ", " + scaleMatrix.values[1, 1] + ", " + scaleMatrix.values[2, 1] + ", " + scaleMatrix.values[3, 1] + "\n" +
             scaleMatrix.values[0, 2] + ", " + scaleMatrix.values[1, 2] + ", " + scaleMatrix.values[2, 2] + ", " + scaleMatrix.values[3, 2] + "\n" +

@@ -20,7 +20,8 @@ public class myTransform : MonoBehaviour
         //We get a copy of all the vertices (this is NOT efficient, but for the sake of understanding we're doing it like this)
         ModelSpaceVertices = myVector3.ToMyVector3(MF.mesh.vertices);
 
-        Position = myVector3.ToMyVector3(gameObject.transform.position);
+        //Position = myVector3.ToMyVector3(gameObject.transform.position);
+        
     }
 
     // Update is called once per frame

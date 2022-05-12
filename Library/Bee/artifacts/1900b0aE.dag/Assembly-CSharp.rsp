@@ -326,6 +326,9 @@
 "Assets/Scripts/Mathematics/MyVector2.cs"
 "Assets/Scripts/Mathematics/MyVector3.cs"
 "Assets/Scripts/Mathematics/myVector4.cs"
+"Assets/Scripts/myPlayerController.cs"
+"Assets/Scripts/Physics/AABB.cs"
+"Assets/Scripts/Physics/collisionController.cs"
 "Assets/Scripts/Physics/myRigidBody.cs"
 -langversion:8.0
 
