@@ -6,7 +6,8 @@ public class myVector2
 {
     public float x, y;
 
-    public static myVector2 Zero = new myVector2(0, 0);
+    public static myVector2 Zero //Replacement for myVector2.Zero
+    { get { return new myVector2(0, 0); } }
 
     public myVector2(float x, float y)
     {
@@ -88,6 +89,11 @@ public class myVector2
     {
         myVector3 rv = new myVector3(x, y, 0);
         return rv;
+    }
+
+    public static myVector2 ToMyVector2(Vector2 a)
+    {
+        return new myVector2(a.x, a.y);
     }
 
     /// <summary>

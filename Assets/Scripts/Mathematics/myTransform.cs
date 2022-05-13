@@ -79,11 +79,10 @@ public class myTransform : MonoBehaviour
             //These final steps are sometimes necessary to make the mesh look correct
             MF.mesh.RecalculateNormals();
             MF.mesh.RecalculateBounds();
-
-            if (gameObject.GetComponentInChildren<Camera>() != null)
+            Camera pCam = gameObject.GetComponentInChildren<Camera>();
+            if (pCam != null)
             {
-                gameObject.GetComponentInChildren<Camera>().transform.localPosition = Position.ToUnityVector3();
-                //gameObject.GetComponentInChildren<Camera>().transform.rotation = Rotation.ToUnityVector3();
+                pCam.transform.localPosition = Position.ToUnityVector3();
             }
         }
     }

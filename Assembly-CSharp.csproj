@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\Physics\AABB.cs" />
     <Compile Include="Assets\Scripts\Actors\transformObject.cs" />
     <Compile Include="Assets\Scripts\Actors\Teleport.cs" />
+    <Compile Include="Assets\Scripts\Physics\myCollisions.cs" />
     <Compile Include="Assets\Scripts\Actors\scaleObject.cs" />
     <Compile Include="Assets\Scripts\Actors\Chase.cs" />
     <Compile Include="Assets\Scripts\Mathematics\MyVector2.cs" />
@@ -75,7 +76,6 @@
     <Compile Include="Assets\Scripts\Physics\collisionController.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myTransform.cs" />
     <Compile Include="Assets\Scripts\Mathematics\myVector4.cs" />
-    <Compile Include="Assets\Scripts\Physics\myCollisions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

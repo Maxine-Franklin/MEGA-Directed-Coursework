@@ -42,27 +42,29 @@ public class AABB : MonoBehaviour
                         "MaxExt: " + maxExtent.x + ", " + maxExtent.y + ", " + maxExtent.z);
         }*/
         myVector3 objPos = myVector3.ToMyVector3(gameObject.transform.position);
+        myVector3 objScale = myVector3.ToMyVector3(gameObject.transform.lossyScale);
         foreach (myVector3 vertex in ModelSpaceVertices) //Cycles through each vertex of the object's mesh to find the objects bounds
         {
-            vertex.x += objPos.x;
-            vertex.y += objPos.y;
-            vertex.z += objPos.z;
+            vertex.x *= objScale.x;
+            vertex.y *= objScale.y;
+            vertex.z *= objScale.z;
+            vertex.x += objPos.x; //* objScale.x;
+            vertex.y += objPos.y; //* objScale.y;
+            vertex.z += objPos.z; //* objScale.z;
             if (vertex.x < minExtent.x) { minExtent.x = vertex.x;}
             if (vertex.x > maxExtent.x) { maxExtent.x = vertex.x;}
             if (vertex.y < minExtent.y) { minExtent.y = vertex.y;}
             if (vertex.y > maxExtent.y) { maxExtent.y = vertex.y;}
             if (vertex.z < minExtent.z) { minExtent.z = vertex.z;}
             if (vertex.z > maxExtent.z) { maxExtent.z = vertex.z;}
-            /*if (gameObject.name == "Floor")
+            if (gameObject.name == "Floor")
             {
                 Debug.Log("Floor:\n" +
                             "Vertex: " + vertex.x + ", " + vertex.y + ", " + vertex.z + "\n" +
                             "MinExt: " + minExtent.x + ", " + minExtent.y + ", " + minExtent.z + "\n" +
                             "MaxExt: " + maxExtent.x + ", " + maxExtent.y + ", " + maxExtent.z);
-            }*/
+            }
         }
-        //self = new AABB(minExtent, maxExtent); //Stores reference to self
-        //self = gameObject.GetComponent<AABB>();
         self = this;
         return;
     }
@@ -86,7 +88,7 @@ public class AABB : MonoBehaviour
         else if (!(collider.Top < _self.Bottom)) { Adjuster.y += _self.Bottom - collider.Top; }
         if (!(collider.Back > _self.Front)) { Adjuster.z += collider.Back - _self.Front; }
         if (!(collider.Front < _self.Back)) { Adjuster.z += collider.Front - _self.Back; }
-        Debug.Log("Floor Top: " + _self.Top + "\nPlayer Bottom: " + collider.Bottom + "\nAdjustment: " + Adjuster.y);
+        //Debug.Log("Floor Top: " + _self.Top + "\nPlayer Bottom: " + collider.Bottom + "\nAdjustment: " + Adjuster.y);
         return Adjuster;                  
     }
 
@@ -132,6 +134,8 @@ public class AABB : MonoBehaviour
                     //Debug.Log("Force: " + colVelocity.x + ", " + colVelocity.y + ", " + colVelocity.z);
                     colRigidBody.Velocity -= colVelocity; //Imparts the reactionary velocity onto the collider
                 }
+                //if (collider.gameObject.GetComponent<myPlayerController>() != null && change.y != 0); //If the collider has the player controller script and the change is on the y-axis...
+                //{ collider.gameObject.GetComponent<myPlayerController>().isFalling = false; Debug.Log("Hi"); } //Updates the player controller script to log that the player is on solid ground
             }
         }
     }
