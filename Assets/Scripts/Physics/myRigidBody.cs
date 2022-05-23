@@ -19,19 +19,14 @@ public class myRigidBody : MonoBehaviour
         //if (minVelocity.y >= Velocity.y && -minVelocity.y <= Velocity.y) { Velocity.y = 0; }
         //if (minVelocity.z >= Velocity.z && -minVelocity.z <= Velocity.z) { Velocity.y = 0; }
 
-        //if (enableGravity)
-        //{ Force += new myVector3(0, Gravity, 0); }
-
         //Calculate acceleration
         Acceleration = Force / Mass;
 
-        if (enableGravity)
-        { Acceleration += new myVector3(0, Gravity * Mass, 0); }
+        if (enableGravity) //If gameObject is affected by gravity then...
+        { Acceleration += new myVector3(0, Gravity * Mass, 0); } //Applies effects of gravity to downwards acceleration
 
         //Apply acceleration to the velocity over time
         Velocity += Acceleration * Time.deltaTime;
-
-        //Debug.Log("Velocity: " + Velocity.x + ", " + Velocity.y + ", " + Velocity.z);
 
         //Updates position
         GetComponent<myTransform>().Position += Velocity * Time.deltaTime; //Updates mesh position
